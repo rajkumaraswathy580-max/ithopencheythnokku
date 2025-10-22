@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wake Up Mac Donald!</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      height: 100%;
+      width: 100%;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    #wakeButton {
+      padding: 30px 60px;
+      font-size: 2.5em;
+      background-color: navy;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    #message {
+      font-family: 'Arial Black', sans-serif;
+      font-size: 4em;
+      color: yellow;
+      text-shadow: 3px 3px 0 #000, 5px 5px 0 #ff6600;
+      display: none;
+      animation: pop 1s ease-out, bounce 1s ease-in-out infinite alternate;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .icon {
+      position: absolute;
+      font-size: 3em;
+      opacity: 0;
+      animation: floatUp 3s ease forwards;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(20px); opacity: 0; }
+      100% { transform: translateY(-100px); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <button id="wakeButton">WAKE UP!</button>
+
+  <div id="message">GOOD MORNING<br>MAC DONALD’S !!!</div>
+
+  <audio id="rooster" src="https://www.soundjay.com/animal/rooster-2.mp3"></audio>
+
+  <script>
+    let clickCount = 0;
+    const button = document.getElementById("wakeButton");
+    const message = document.getElementById("message");
+    const sound = document.getElementById("rooster");
+
+    button.addEventListener("click", () => {
+      clickCount++;
+
+      // Make the button grow
+      button.style.transform = `scale(${1 + clickCount * 0.3})`;
+
+      if (clickCount === 3) {
+        button.style.display = "none";
+        message.style.display = "block";
+        sound.play();
+
+        // Add floating roses and kisses
+        for (let i = 0; i < 15; i++) {
+          const icon = document.createElement("div");
+          icon.className = "icon";
+          icon.textContent = i % 2 === 0 ? "🌹" : "😘";
+          icon.style.left = `${Math.random() * 90 + 5}%`;
+          icon.style.top = `${Math.random() * 70 + 20}%`;
+          icon.style.animationDelay = `${Math.random() * 2}s`;
+          document.body.appendChild(icon);
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
